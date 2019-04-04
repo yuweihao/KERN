@@ -1,7 +1,6 @@
 """
 Training script 4 Detection # wrote by rowanz
 """
-from dataloaders.mscoco import CocoDetection, CocoDataLoader
 from dataloaders.visual_genome import VGDataLoader, VG
 from lib.object_detector import ObjectDetector
 import numpy as np
@@ -21,19 +20,13 @@ from torch.optim.lr_scheduler import ReduceLROnPlateau
 cudnn.benchmark = True
 conf = ModelConfig()
 
-if conf.coco:
-    train, val = CocoDetection.splits()
-    val.ids = val.ids[:conf.val_size]
-    train.ids = train.ids
-    train_loader, val_loader = CocoDataLoader.splits(train, val, batch_size=conf.batch_size,
-                                                     num_workers=conf.num_workers,
-                                                     num_gpus=conf.num_gpus)
-else:
-    train, val, _ = VG.splits(num_val_im=conf.val_size, filter_non_overlap=False,
-                              filter_empty_rels=False, use_proposals=conf.use_proposals)
-    train_loader, val_loader = VGDataLoader.splits(train, val, batch_size=conf.batch_size,
-                                                   num_workers=conf.num_workers,
-                                                   num_gpus=conf.num_gpus)
+
+
+train, val, _ = VG.splits(num_val_im=conf.val_size, filter_non_overlap=False,
+                            filter_empty_rels=False, use_proposals=conf.use_proposals)
+train_loader, val_loader = VGDataLoader.splits(train, val, batch_size=conf.batch_size,
+                                                num_workers=conf.num_workers,
+                                                num_gpus=conf.num_gpus)
 
 detector = ObjectDetector(classes=train.ind_to_classes, num_gpus=conf.num_gpus,
                           mode='rpntrain' if not conf.use_proposals else 'proposals', use_resnet=conf.use_resnet)
@@ -172,7 +165,7 @@ def val_epoch():
     val_coco = val.coco
     coco_dt = val_coco.loadRes(vr)
     coco_eval = COCOeval(val_coco, coco_dt, 'bbox')
-    coco_eval.params.imgIds = val.ids if conf.coco else [x for x in range(len(val))]
+    coco_eval.params.imgIds = [x for x in range(len(val))]
 
     coco_eval.evaluate()
     coco_eval.accumulate()
@@ -189,17 +182,10 @@ def val_batch(batch_num, b):
     cls_preds_np = result.obj_preds.data.cpu().numpy()
     boxes_np = result.boxes_assigned.data.cpu().numpy()
     im_inds_np = result.im_inds.data.cpu().numpy()
-    im_scales = b.im_sizes.reshape((-1, 3))[:, 2]
-    if conf.coco:
-        boxes_np /= im_scales[im_inds_np][:, None]
-        boxes_np[:, 2:4] = boxes_np[:, 2:4] - boxes_np[:, 0:2] + 1
-        cls_preds_np[:] = [val.ind_to_id[c_ind] for c_ind in cls_preds_np]
-        im_inds_np[:] = [val.ids[im_ind + batch_num * conf.batch_size * conf.num_gpus]
-                         for im_ind in im_inds_np]
-    else:
-        boxes_np *= BOX_SCALE / IM_SCALE
-        boxes_np[:, 2:4] = boxes_np[:, 2:4] - boxes_np[:, 0:2] + 1
-        im_inds_np += batch_num * conf.batch_size * conf.num_gpus
+
+    boxes_np *= BOX_SCALE / IM_SCALE
+    boxes_np[:, 2:4] = boxes_np[:, 2:4] - boxes_np[:, 0:2] + 1
+    im_inds_np += batch_num * conf.batch_size * conf.num_gpus
 
     return np.column_stack((im_inds_np, boxes_np, scores_np, cls_preds_np))
 
@@ -215,4 +201,4 @@ for epoch in range(start_epoch + 1, start_epoch + 1 + conf.num_epochs):
         'epoch': epoch,
         'state_dict': detector.state_dict(),
         'optimizer': optimizer.state_dict(),
-    }, os.path.join(conf.save_dir, '{}-{}.tar'.format('coco' if conf.coco else 'vg', epoch)))
+    }, os.path.join(conf.save_dir, '{}-{}.tar'.format('vg', epoch)))
