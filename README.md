@@ -11,7 +11,7 @@ This repository contains trained models and PyTorch version code for the above p
 @inproceedings{chen2019knowledge,
   title={Knowledge-Embedded Routing Network for Scene Graph Generation},
   author={Chen, Tianshui and Yu, Weihao and Chen, Riquan and Lin, Liang},
-  booktitle = "Conference on Computer Vision and Pattern Recognition",  
+  booktitle = "Conference on Computer Vision and Pattern Recognition",
   year={2019}
 }
 ```
@@ -36,7 +36,7 @@ You could also run ./scripts/pretrain_detector.sh to train detector by yourself.
 5. Train our KERN model. There are three training phase. You need a GPU with 12G memory. 
     - Train VG relationship predicate classification: run ```CUDA_VISIBLE_DEVICES=YOUR_GPU_NUM ./scripts/train_kern_predcls.sh``` 
     This phase maybe last for about 20-30 epochs. 
-    - Train scene graph classification: run ```CUDA_VISIBLE_DEVICES=YOUR_GPU_NUM ./scripts/train_kern_predcls.sh```. Before run this script, you need to modify the path name of best checkpoint you trained in precls phase: ```-ckpt checkpoints/kern_predcls/vgrel-YOUR_BEST_EPOCH_RNUM.tar```. It lasts about 8-13 epochs, then you can decrease the learning rate to 1e-6 to further improve the performance. Like neural-motifs, we use only one trained checkpoint for both predcls and sgcls tasks. You can also download our checkpoint here: kern_sgcls_predcls.tar (<a href="https://drive.google.com/open?id=1F2WBSGRHmJD9K1LT8ImkGOCuZraood21" target="_blank">Google Drive</a>, <a href="https://1drv.ms/f/s!ArFSFaZzVErwgUKVN85N17rMEXME" target="_blank">OneDrive</a>).
+    - Train scene graph classification: run ```CUDA_VISIBLE_DEVICES=YOUR_GPU_NUM ./scripts/train_kern_sgcls.sh```. Before run this script, you need to modify the path name of best checkpoint you trained in precls phase: ```-ckpt checkpoints/kern_predcls/vgrel-YOUR_BEST_EPOCH_RNUM.tar```. It lasts about 8-13 epochs, then you can decrease the learning rate to 1e-6 to further improve the performance. Like neural-motifs, we use only one trained checkpoint for both predcls and sgcls tasks. You can also download our checkpoint here: kern_sgcls_predcls.tar (<a href="https://drive.google.com/open?id=1F2WBSGRHmJD9K1LT8ImkGOCuZraood21" target="_blank">Google Drive</a>, <a href="https://1drv.ms/f/s!ArFSFaZzVErwgUKVN85N17rMEXME" target="_blank">OneDrive</a>).
     - Refine for detection: run ```CUDA_VISIBLE_DEVICES=YOUR_GPU_NUM ./scripts/train_kern_sgdet.sh``` or download the checkpoint here: kern_sgdet.tar (<a href="https://drive.google.com/open?id=1hAx4MpMiwofABQi9H6_Jb0Qjp016JX7T" target="_blank">Google Drive</a>, <a href="https://1drv.ms/f/s!ArFSFaZzVErwgUKVN85N17rMEXME" target="_blank">OneDrive</a>). If you find the validation performance plateaus, you could also decrease learning rate to 1e-6 to improve performance. 
 
 6. Evaluate: refer to the scripts ```CUDA_VISIBLE_DEVICES=YOUR_GPU_NUM ./scripts/eval_kern_[predcls/sgcls/sgdet].sh```. You can conveniently find all our checkpoints, evaluation caches and results in this folder KERN_Download (<a href="https://drive.google.com/open?id=1yCQfZRCt6UF-C-jSq78NaF9IUyNplLFx" target="_blank">Google Drive</a>, <a href="https://1drv.ms/f/s!ArFSFaZzVErwgT_SvqLZ3sv5XDu-" target="_blank">OneDrive</a>).
