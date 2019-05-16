@@ -35,7 +35,7 @@ You could also run ./scripts/pretrain_detector.sh to train detector by yourself.
 
 5. Train our KERN model. There are three training phase. You need a GPU with 12G memory. 
     - Train VG relationship predicate classification: run ```CUDA_VISIBLE_DEVICES=YOUR_GPU_NUM ./scripts/train_kern_predcls.sh``` 
-    This phase maybe last for about 20-30 epochs. 
+    This phase maybe last about 20-30 epochs. 
     - Train scene graph classification: run ```CUDA_VISIBLE_DEVICES=YOUR_GPU_NUM ./scripts/train_kern_sgcls.sh```. Before run this script, you need to modify the path name of best checkpoint you trained in precls phase: ```-ckpt checkpoints/kern_predcls/vgrel-YOUR_BEST_EPOCH_RNUM.tar```. It lasts about 8-13 epochs, then you can decrease the learning rate to 1e-6 to further improve the performance. Like neural-motifs, we use only one trained checkpoint for both predcls and sgcls tasks. You can also download our checkpoint here: kern_sgcls_predcls.tar (<a href="https://drive.google.com/open?id=1F2WBSGRHmJD9K1LT8ImkGOCuZraood21" target="_blank">Google Drive</a>, <a href="https://1drv.ms/f/s!ArFSFaZzVErwgUKVN85N17rMEXME" target="_blank">OneDrive</a>).
     - Refine for detection: run ```CUDA_VISIBLE_DEVICES=YOUR_GPU_NUM ./scripts/train_kern_sgdet.sh``` or download the checkpoint here: kern_sgdet.tar (<a href="https://drive.google.com/open?id=1hAx4MpMiwofABQi9H6_Jb0Qjp016JX7T" target="_blank">Google Drive</a>, <a href="https://1drv.ms/f/s!ArFSFaZzVErwgUKVN85N17rMEXME" target="_blank">OneDrive</a>). If you find the validation performance plateaus, you could also decrease learning rate to 1e-6 to improve performance. 
 
@@ -44,7 +44,7 @@ You could also run ./scripts/pretrain_detector.sh to train detector by yourself.
 
 
 # Evaluation metrics
-In validation/test dataset, assume there are <img src="https://latex.codecogs.com/gif.latex?Y" />  images. For each image, a model generates top <img src="https://latex.codecogs.com/gif.latex?X" /> predicted relationship triplets. As for image <img src="https://latex.codecogs.com/gif.latex?I_y" />, there are <img src="https://latex.codecogs.com/gif.latex?G_y" /> ground truth relationship triplets, where <img src="https://latex.codecogs.com/gif.latex?T_y^X" /> triplets are predicted successfully by the model. We can calculate:
+In validation/test dataset, assume there are <img src="https://latex.codecogs.com/gif.latex?Y" />  images. For each image, a model generates top <img src="https://latex.codecogs.com/gif.latex?X" /> predicted relationship triplets. As for image <img src="https://latex.codecogs.com/gif.latex?I_y" />, there are <img src="https://latex.codecogs.com/gif.latex?G_y" /> ground truth relationship triplets, where <img src="https://latex.codecogs.com/gif.latex?T_{y}^{X}" /> triplets are predicted successfully by the model. We can calculate:
 
 <img src="https://latex.codecogs.com/gif.latex?R@X=\frac{1}{Y}\sum_{y=1}^{Y}\frac{T_y^X}{G_y}." />
 
