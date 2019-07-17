@@ -29,7 +29,14 @@ def get_obj_cooccurrence_mat(train_data=VG(mode='train', filter_duplicate_rels=F
             sum_obj_pict[i] += 1
         inds = np.transpose(np.nonzero(1 - np.eye(len(gt_classes_list), dtype=np.int64)))
         for (i, j) in inds:
-            mat[gt_classes[i], gt_classes[j]] += 1
+            
+            # Thank @ystluffy for finding that it is 
+            # more accurate to replace ```mat[gt_classes[i], gt_classes[j]] += 1``` with mat[gt_classes_list[i], gt_classes_list[j]] +=1.
+            # However, since the checkpoints we released were trained by the old code, 
+            # if you want to use our checkpoint, you still need to use the old code ```mat[gt_classes[i], gt_classes[j]] += 1```.
+            
+            # mat[gt_classes_list[i], gt_classes_list[j]] +=1 # If you want to train models by yourself, please uncomment this code because it is more accurate.
+            mat[gt_classes[i], gt_classes[j]] += 1 # If you want to use our checkpoint, you still need to use this code. If you want to train models by yourself, please comment it.
         for key, value in dict(Counter(gt_classes)).items():
             if value >= 2:
                 mat[key, key] += 1
