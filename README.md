@@ -1,6 +1,5 @@
 # Knowledge-Embedded Routing Network  for Scene Graph Generation
-Tianshui Chen*, Weihao Yu*, Riquan Chen, and Liang Lin, “Knowledge-Embedded Routing Network for Scene Graph Generation”, CVPR, 2019. (* co-first authors) [[manuscript](https://arxiv.org/abs/1903.03326)] (camera version will be available soon)
-
+Tianshui Chen*, Weihao Yu*, Riquan Chen, and Liang Lin, “Knowledge-Embedded Routing Network for Scene Graph Generation”, CVPR, 2019. (* co-first authors) [[PDF](http://whyu.me/pdf/CVPR2019_KERN.pdf)]
 
 
 This repository contains trained models and PyTorch version code for the above paper, If the paper significantly inspires you, we request that you cite our work:
