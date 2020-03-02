@@ -23,9 +23,9 @@ In our paper, our model's strong baseline model is [SMN](https://arxiv.org/abs/1
  
 1. Update the config file with the dataset paths. Specifically:
     - Visual Genome (the VG_100K folder, image_data.json, VG-SGG.h5, and VG-SGG-dicts.json). See data/stanford_filtered/README.md for the steps to download these.
-    - You'll also need to fix your PYTHONPATH: ```export PYTHONPATH=/home/yuweihao/exp/KERN``` 
+    - You'll also need to fix your PYTHONPATH: `export PYTHONPATH=/home/yuweihao/exp/KERN`
 
-2. Compile everything. run ```make``` in the main directory: this compiles the Bilinear Interpolation operation for the RoIs. Maybe you need to update your CUDA path in Makefile file.
+2. Compile everything. Update your CUDA path in Makefile file and run `make` in the main directory: this compiles the Bilinear Interpolation operation for the RoIs.
 
 3. Pretrain VG detection. To compare our model with [neural-motifs](https://github.com/rowanz/neural-motifs) fairly, we just use their pretrained VG detection. [You can download their pretrained detector checkpoint provided by @rowanz.](https://drive.google.com/open?id=11zKRr2OF5oclFL47kjFYBOxScotQzArX) 
 You could also run ./scripts/pretrain_detector.sh to train detector by yourself. Note: You might have to modify the learning rate and batch size according to number and memory of GPU you have.
