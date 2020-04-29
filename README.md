@@ -45,6 +45,7 @@ You could also run ./scripts/pretrain_detector.sh to train detector by yourself.
 # Evaluation metrics
 In validation/test dataset, assume there are <img src="https://render.githubusercontent.com/render/math?math=Y" />  images. For each image, a model generates top <img src="https://render.githubusercontent.com/render/math?math=X" /> predicted relationship triplets. As for image <img src="https://render.githubusercontent.com/render/math?math=I_{y}" />, there are <img src="https://render.githubusercontent.com/render/math?math=G_{y}" /> ground truth relationship triplets, where <img src="https://render.githubusercontent.com/render/math?math=T_{y}^{X}" /> triplets are predicted successfully by the model. We can calculate:
 
+
 <img src="https://latex.codecogs.com/gif.latex?R@X=\frac{1}{Y}\sum_{y=1}^{Y}\frac{T_{y}^{X}}{G_{y}}. " />
 
 
