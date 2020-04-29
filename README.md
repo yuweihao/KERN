@@ -45,19 +45,19 @@ You could also run ./scripts/pretrain_detector.sh to train detector by yourself.
 # Evaluation metrics
 In validation/test dataset, assume there are <img src="https://render.githubusercontent.com/render/math?math=Y" />  images. For each image, a model generates top <img src="https://render.githubusercontent.com/render/math?math=X" /> predicted relationship triplets. As for image <img src="https://render.githubusercontent.com/render/math?math=I_{y}" />, there are <img src="https://render.githubusercontent.com/render/math?math=G_{y}" /> ground truth relationship triplets, where <img src="https://render.githubusercontent.com/render/math?math=T_{y}^{X}" /> triplets are predicted successfully by the model. We can calculate:
 
-<img src="https://render.githubusercontent.com/render/math?math=R\@X=\frac{1}{Y}\sum_{y=1}^{Y}\frac{T_y^X}{G_y}." />
+<img src="https://latex.codecogs.com/gif.latex?R@X=\frac{1}{Y}\sum_{y=1}^{Y}\frac{T_y^X}{G_y}." />
 
 
 For image <img src="https://render.githubusercontent.com/render/math?math=I_{y}" />, in its <img src="https://render.githubusercontent.com/render/math?math=G_{y}" /> ground truth relationship triplets, there are <img src="https://render.githubusercontent.com/render/math?math=G_{yk}" /> ground truth triplets with relationship <img src="https://render.githubusercontent.com/render/math?math=k" /> (Except <img src="https://render.githubusercontent.com/render/math?math=k=1" />, meaning no relationship. The number of relationship classes is <img src="https://render.githubusercontent.com/render/math?math=K" />, including no relationship), where <img src="https://render.githubusercontent.com/render/math?math=T_{yk}^X" /> triplets are predicted successfully by the model. In <img src="https://render.githubusercontent.com/render/math?math=Y" /> images of validation/test dataset, for relationship <img src="https://render.githubusercontent.com/render/math?math=k" />, there are <img src="https://render.githubusercontent.com/render/math?math=Y_{k}" /> images which contain at least one ground truth triplet with this relationship. The R@X of relationship <img src="https://render.githubusercontent.com/render/math?math=k" /> can be calculated:
 
 
-<img src="https://render.githubusercontent.com/render/math?math=R\@X_k=\frac{1}{Y_k}\sum_{y=1,G_{yk}\neq0}^{Y}\frac{T_{yk}^X}{G_{yk}}." />
+<img src="https://latex.codecogs.com/gif.latex?R@X_k=\frac{1}{Y_k}\sum_{y=1,G_{yk}\neq0}^{Y}\frac{T_{yk}^X}{G_{yk}}." />
 
 
 
 Then we can calculate:
 
-<img src="https://render.githubusercontent.com/render/math?math=mR\@X=\frac{1}{K-1}\sum_{k=2}^{K}R\@X_k." />
+<img src="https://latex.codecogs.com/gif.latex?mR@X=\frac{1}{K-1}\sum_{k=2}^{K}R@X_k." />
 
 
 # Some results
