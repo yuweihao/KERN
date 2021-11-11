@@ -17,6 +17,7 @@ Regardless of your operating system's support for CUDA 9.0, begin with the follo
      * Boot up a container: `docker run -it -v local/path/to/repo:/kern --gpus all cuda9`.
  * Activate the Conda environment: `conda activate kern`.
  * Compile the CUDA part of the project: `bash compile.sh`.
+ * Compute the statistical prior: `python prior_matrices/generate_knowledge.py`.
  * Now, either inside a Docker container or not, follow step 4, 5, and 6 from [the Setup section in the original README below](#setup-1).
 
 # Knowledge-Embedded Routing Network for Scene Graph Generation
