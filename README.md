@@ -9,23 +9,15 @@ The current KERN implementation relies on CUDA 9.0 which, unfortunately, is an o
 Regardless of your operating system's support for CUDA 9.0, begin with the following steps:
  * Clone the repository: `git clone git@github.com:AU-Nebula/KERN`.
  * Download the data: `bash download_data.sh`. There are quite some data to download, so this step will take a while.
-
-Now, depending on wether CUDA 9.0 is available, follow the corresponding section below.
-
-### CUDA 9.0 is Available
-The following assumes that Conda is installed on the system:
- * Set up and appropiate Conda environment: `conda env creaet -f environment.yml`. This will create an environment called `kern` which includes all the dependencies needed to run the code.
+ * Now, depending on wether CUDA 9.0 is available, follow the corresponding point below.
+   * CUDA 9.0 is available. The assumes that Conda is installed on the system.
+     * Set up and appropiate Conda environment: `conda env creaet -f environment.yml`. This will create an environment called `kern` which includes all the dependencies needed to run the code.
+   * CUDA 9.0 is _not_ available. This assumes that Docker and the NVIDIA Container Toolkit is installed on the system.
+     * Build the Docker image: `docker build -t cuda9 .`.
+     * Boot up a container: `docker run -it -v local/path/to/repo:/kern --gpus all cuda9`.
  * Activate the Conda environment: `conda activate kern`.
  * Compile the CUDA part of the project: `bash compile.sh`.
-
-### CUDA 9.0 is _not_ Available
-The following assumes that Docker and the NVIDIA Container Toolkit is installed on the system.
- * Build the Docker image: `docker build -t cuda9 .`.
- * Boot up a container: `docker run -it -v local/path/to/repo:/kern --gpus all cuda9`.
- * Activate the Conda environment: `conda activate kern`.
- * Compile the CUDA part of the project: `bash compile.sh`.
-
-Now, either inside a Docker container or not, you can follow step 4, 5, and 6 from [the Setup section in the original README below](#setup).
+ * Now, either inside a Docker container or not, follow step 4, 5, and 6 from [the Setup section in the original README below](#setup).
 
 # Knowledge-Embedded Routing Network for Scene Graph Generation
 Tianshui Chen*, Weihao Yu*, Riquan Chen, and Liang Lin, “Knowledge-Embedded Routing Network for Scene Graph Generation”, CVPR, 2019. (* co-first authors) [[PDF](http://whyu.me/pdf/CVPR2019_KERN.pdf)]
