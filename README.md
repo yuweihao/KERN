@@ -10,9 +10,9 @@ Regardless of your operating system's support for CUDA 9.0, begin with the follo
  * Clone the repository: `git clone git@github.com:AU-Nebula/KERN`.
  * Download the data: `bash download_data.sh`. There are quite some data to download, so this step will take a while.
  * Now, depending on wether CUDA 9.0 is available, follow the corresponding point below.
-   * CUDA 9.0 is available. The assumes that Conda is installed on the system.
-     * Set up and appropiate Conda environment: `conda env creaet -f environment.yml`. This will create an environment called `kern` which includes all the dependencies needed to run the code.
-   * CUDA 9.0 is _not_ available. This assumes that Docker and the NVIDIA Container Toolkit is installed on the system.
+   * CUDA 9.0 _is_ available. This assumes that Conda is installed on the system.
+     * Set up and appropiate Conda environment: `conda env create -f environment.yml`. This will create an environment called `kern` which includes all the dependencies needed to run the code.
+   * CUDA 9.0 is _not_ available. This assumes that Docker and [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker) are installed on the system.
      * Build the Docker image: `docker build -t cuda9 .`.
      * Boot up a container: `docker run -it -v local/path/to/repo:/kern --gpus all cuda9`.
  * Activate the Conda environment: `conda activate kern`.
