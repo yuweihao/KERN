@@ -18,6 +18,6 @@ wget -nc -P data/stanford_filtered http://cvgl.stanford.edu/scene-graph/VG/image
 wget -nc -P data/stanford_filtered http://cvgl.stanford.edu/scene-graph/dataset/VG-SGG.h5
 wget -nc -P data/stanford_filtered http://cvgl.stanford.edu/scene-graph/dataset/VG-SGG-dicts.json
 
-mkdir checkpoints/vgdet
+mkdir -p checkpoints/vgdet
 
 wget -nc --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=11zKRr2OF5oclFL47kjFYBOxScotQzArX' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=11zKRr2OF5oclFL47kjFYBOxScotQzArX" -O checkpoints/vgdet/vg-faster-rcnn.tar && rm -rf /tmp/cookies.txt
