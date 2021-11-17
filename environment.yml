@@ -67,6 +67,7 @@ dependencies:
   - tk=8.6.11=h1ccaba5_0
   - torchvision=0.2.0=py36h17b6947_1
   - tornado=6.1=py36h27cfd23_0
+  - tqdm=4.62.3=pyhd3eb1b0_1
   - wheel=0.37.0=pyhd3eb1b0_1
   - xz=5.2.5=h7b6447c_0
   - zlib=1.2.11=h7b6447c_3
