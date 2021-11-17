@@ -11,10 +11,10 @@ if [ ! -d "data/visual_genome" ]; then
   wget -nc -P data/visual_genome https://cs.stanford.edu/people/rak248/VG_100K_2/images2.zip
   unzip -d data/visual_genome data/visual_genome/images2.zip
   rm data/visual_genome/images2.zip
-fi
 
-find data/visual_genome/ -name \*.jpg -exec mv -t data/visual_genome {} +
-find data/visual_genome/ -name VG* -exec rm -rf {} +
+  find data/visual_genome/ -name \*.jpg -exec mv -t data/visual_genome {} +
+  find data/visual_genome/ -name VG* -exec rm -rf {} +
+fi
 
 wget -nc -P data/stanford_filtered http://cvgl.stanford.edu/scene-graph/VG/image_data.json
 wget -nc -P data/stanford_filtered http://cvgl.stanford.edu/scene-graph/dataset/VG-SGG.h5
