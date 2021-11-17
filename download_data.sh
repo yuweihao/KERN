@@ -1,15 +1,17 @@
 # This script downloads the Visual Genome dataset as well as the metadata
 # needed for the scene graph generation task.
 
-mkdir data/visual_genome
+if [ ! -d "data/visual_genome" ]; then
+  mkdir data/visual_genome
 
-wget -nc -P data/visual_genome https://cs.stanford.edu/people/rak248/VG_100K_2/images.zip
-unzip -d data/visual_genome data/visual_genome/images.zip
-rm data/visual_genome/images.zip
+  wget -nc -P data/visual_genome https://cs.stanford.edu/people/rak248/VG_100K_2/images.zip
+  unzip -d data/visual_genome data/visual_genome/images.zip
+  rm data/visual_genome/images.zip
 
-wget -nc -P data/visual_genome https://cs.stanford.edu/people/rak248/VG_100K_2/images2.zip
-unzip -d data/visual_genome data/visual_genome/images2.zip
-rm data/visual_genome/images2.zip
+  wget -nc -P data/visual_genome https://cs.stanford.edu/people/rak248/VG_100K_2/images2.zip
+  unzip -d data/visual_genome data/visual_genome/images2.zip
+  rm data/visual_genome/images2.zip
+fi
 
 find data/visual_genome/ -name \*.jpg -exec mv -t data/visual_genome {} +
 find data/visual_genome/ -name VG* -exec rm -rf {} +
