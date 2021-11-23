@@ -8,7 +8,7 @@ COPY environment.yml .
 
 RUN apt update -y && \
     apt upgrade -y && \
-    apt install -y wget && \
+    apt install -y wget graphviz && \
     wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \
     bash ~/miniconda.sh -b -p /opt/conda && \
     rm ~/miniconda.sh && \
