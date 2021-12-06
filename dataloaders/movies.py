@@ -65,7 +65,7 @@ class Movies(Dataset):
             "scale": IM_SCALE / BOX_SCALE,
             "index": index,
             "flipped": False,
-            "fn": file_name,
+            "fn": str(file_name),
         }
 
     def __len__(self):
