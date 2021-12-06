@@ -70,7 +70,7 @@ class Movies(Dataset):
     @staticmethod
     def collate_fn(batch, mode="det", is_train=False, num_gpus=1):
         blob = Blob(
-            mode=model,
+            mode=mode,
             is_train=is_train,
             num_gpus=num_gpus,
             batch_size_per_gpu=len(batch) // num_gpus,
