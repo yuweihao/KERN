@@ -34,7 +34,7 @@ class Movies(Dataset):
         self.file_names = [
             file_name
             for extension in ["jpeg", "jpg"]
-            for file_name in pl.Path("data/movies").glob(f"*.{extension}")
+            for file_name in pathlib.Path("data/movies").glob(f"*.{extension}")
         ]
 
     def __getitem__(self, index):
