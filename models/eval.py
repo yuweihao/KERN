@@ -19,7 +19,7 @@ def main(path):
     # Set up and load pretrained KERN model.
     model = lib.kern_model.KERN(
         classes=dataset.objects,
-        rel_classes=dsataset.predicates,
+        rel_classes=dataset.predicates,
         num_gpus=conf.num_gpus,
         mode="det",
         require_overlap_det=True,
