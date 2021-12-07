@@ -63,9 +63,9 @@ class Movies(torch.utils.data.Dataset):
         return {
             "img": _transformation_pipline(image),
             "img_size": size,
-            "gt_boxes": [],
-            "gt_classes": [],
-            "gt_relations": [],
+            "gt_boxes": np.array([]),
+            "gt_classes": np.array([]),
+            "gt_relations": np.array([]),
             "scale": config.IM_SCALE / config.BOX_SCALE,
             "index": index,
             "flipped": False,
