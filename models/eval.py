@@ -14,7 +14,9 @@ def main(path):
 
     # Set up movies dataset as a PyTorch data loader.
     dataset = dataloaders.movies.Movies(path)
-    data_loader = torch.utils.data.DataLoader(dataset)
+    data_loader = torch.utils.data.DataLoader(
+        dataset, collate_fn=dataloaders.movies.Movies.collate_fn
+    )
 
     # Set up and load pretrained KERN model.
     model = lib.kern_model.KERN(
@@ -55,6 +57,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--path", default="data/movies")
 
-    args = parser.parse_args()
+    args, _rest = parser.parse_args()
 
     main(path=args.path)

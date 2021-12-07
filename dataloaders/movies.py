@@ -1,35 +1,30 @@
 import os
 import pathlib
 
-from config import (
-    BOX_SCALE,
-    IM_DATA_FN,
-    IM_SCALE,
-    PROPOSAL_FN,
-    VG_IMAGES,
-    VG_SGG_DICT_FN,
-    VG_SGG_FN,
-)
-from PIL import Image
-from torch.utils.data import DataLoader, Dataset
-from torchvision.transforms import Compose, Normalize, Resize, ToTensor
+import config
+import numpy as np
+import PIL
+import torch.utils.data
+import torchvision.transforms
 
-from dataloaders.blob import Blob
-from dataloaders.image_transforms import SquarePad
-from dataloaders.visual_genome import load_info
+import dataloaders.blob
+import dataloaders.image_transforms
+import dataloaders.visual_genome
 
 # Image transformation pipeline taken from the Visual Genome data loader.
-_transformation_pipline = Compose(
+_transformation_pipline = torchvision.transforms.Compose(
     [
-        SquarePad(),
-        Resize(IM_SCALE),
-        ToTensor(),
-        Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+        dataloaders.image_transforms.SquarePad(),
+        torchvision.transforms.Resize(config.IM_SCALE),
+        torchvision.transforms.ToTensor(),
+        torchvision.transforms.Normalize(
+            mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]
+        ),
     ]
 )
 
 
-class Movies(Dataset):
+class Movies(torch.utils.data.Dataset):
     def __init__(self, data_dir="data/movies"):
         self.data_dir = pathlib.Path(data_dir)
 
@@ -42,23 +37,25 @@ class Movies(Dataset):
         # Since we use a model trained on the Visual Genome dataset, the object
         # and predicate classes that we want to predict are the ones from that
         # dataset.
-        self.objects, self.predicates = load_info(VG_SGG_DICT_FN)
+        self.objects, self.predicates = dataloaders.visual_genome.load_info(
+            config.VG_SGG_DICT_FN
+        )
 
     def __getitem__(self, index):
         file_name = self.file_names[index]
 
-        image = Image.open(file_name).convert("RGB")
+        image = PIL.Image.open(file_name).convert("RGB")
 
         width, height = image.size
 
-        factor = IM_SCALE / max(width, height)
+        factor = config.IM_SCALE / max(width, height)
 
         if height > width:
-            size = (IM_SCALE, int(width * factor), factor)
+            size = (config.IM_SCALE, int(width * factor), factor)
         elif height < width:
-            size = (int(height * factor), IM_SCALE, factor)
+            size = (int(height * factor), config.IM_SCALE, factor)
         else:
-            size = (IM_SCALE, IM_SCALE, factor)
+            size = (config.IM_SCALE, config.IM_SCALE, factor)
 
         # The gt_* attributes represent ground truth data, but since this
         # dataset will only be used for testing purposes (for now, at least),
@@ -69,7 +66,7 @@ class Movies(Dataset):
             "gt_boxes": [],
             "gt_classes": [],
             "gt_relations": [],
-            "scale": IM_SCALE / BOX_SCALE,
+            "scale": config.IM_SCALE / config.BOX_SCALE,
             "index": index,
             "flipped": False,
             "fn": str(file_name),
@@ -80,7 +77,7 @@ class Movies(Dataset):
 
     @staticmethod
     def collate_fn(batch, mode="det", is_train=False, num_gpus=1):
-        blob = Blob(
+        blob = dataloaders.blob.Blob(
             mode=mode,
             is_train=is_train,
             num_gpus=num_gpus,
