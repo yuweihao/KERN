@@ -57,6 +57,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--path", default="data/movies")
 
-    args, _rest = parser.parse_args()
+    args, _rest = parser.parse_known_args()
 
     main(path=args.path)
