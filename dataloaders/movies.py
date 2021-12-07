@@ -11,12 +11,14 @@ from config import (
     VG_SGG_FN,
 )
 from PIL import Image
-from torch.utils.data import Dataset
+from torch.utils.data import DataLoader, Dataset
 from torchvision.transforms import Compose, Normalize, Resize, ToTensor
 
 from dataloaders.blob import Blob
 from dataloaders.image_transforms import SquarePad
+from dataloaders.visual_genome import load_info
 
+# Image transformation pipeline taken from the Visual Genome data loader.
 _transformation_pipline = Compose(
     [
         SquarePad(),
@@ -34,8 +36,13 @@ class Movies(Dataset):
         self.file_names = [
             file_name
             for extension in ["jpeg", "jpg"]
-            for file_name in pathlib.Path("data/movies").glob(f"*.{extension}")
+            for file_name in self.data_dir.glob(f"*.{extension}")
         ]
+
+        # Since we use a model trained on the Visual Genome dataset, the object
+        # and predicate classes that we want to predict are the ones from that
+        # dataset.
+        self.objects, self.predicates = load_info(VG_SGG_DICT_FN)
 
     def __getitem__(self, index):
         file_name = self.file_names[index]
@@ -54,8 +61,8 @@ class Movies(Dataset):
             size = (IM_SCALE, IM_SCALE, factor)
 
         # The gt_* attributes represent ground truth data, but since this
-        # dataset will only we used for testing purposes (for now, at least),
-        # we just fill in with empty values.
+        # dataset will only be used for testing purposes (for now, at least),
+        # we just fill in empty values.
         return {
             "img": _transformation_pipline(image),
             "img_size": size,
@@ -80,7 +87,7 @@ class Movies(Dataset):
             batch_size_per_gpu=len(batch) // num_gpus,
         )
 
-        for item in data:
+        for item in batch:
             blob.append(item)
 
         blob.reduce()
