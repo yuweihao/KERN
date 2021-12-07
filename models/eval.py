@@ -21,7 +21,6 @@ def main(path):
         classes=dataset.objects,
         rel_classes=dataset.predicates,
         num_gpus=conf.num_gpus,
-        mode="det",
         require_overlap_det=True,
         use_resnet=conf.use_resnet,
         use_proposals=conf.use_proposals,
