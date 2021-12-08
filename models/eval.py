@@ -48,10 +48,16 @@ def main(path):
     # Evaluators
     evaluator = {"sgdet": lib.evaluation.sg_eval.BasicSceneGraphEvaluator("sgdet")}
     evaluators = [
-        (index, predicate, {"sgdet": BasicSceneGraphEvaluator("sgdet")})
+        (
+            index,
+            predicate,
+            {"sgdet": lib.evaluation.sg_eval.BasicSceneGraphEvaluator("sgdet")},
+        )
         for index, predicate in enumerate(dataset.predicates)
         if index > 0
     ]
+
+    predictions = []
 
     # Interate data and predict.
     for batch_index, batch in tqdm.tqdm(enumerate(data_loader)):
@@ -71,10 +77,17 @@ def main(path):
             predicates,
             predicate_scores,
         ) in enumerate(output):
-            print(boxes, objects, object_scores, predicates, predicate_scores)
-            break
+            prediction = {
+                "pred_boxes": boxes * config.BOX_SCALE / config.IM_SCALE,
+                "pred_classes": objects,
+                "pred_rel_indx": predicates,
+                "obj_scores": object_scores,
+                "rel_scores": predicate_scores,
+            }
 
-        break
+            predictions.append(prediction)
+
+    print(predictions)
 
 
 if __name__ == "__main__":
