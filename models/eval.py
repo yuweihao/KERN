@@ -2,6 +2,7 @@ import argparse
 
 import config
 import dataloaders.movies
+import lib.evaluation.sg_eval
 import lib.kern_model
 import lib.pytorch_misc
 import torch
@@ -44,13 +45,36 @@ def main(path):
     lib.pytorch_misc.optimistic_restore(model, checkpoint["state_dict"])
     model.eval()
 
+    # Evaluators
+    evaluator = {"sgdet": lib.evaluation.sg_eval.BasicSceneGraphEvaluator("sgdet")}
+    evaluators = [
+        (index, predicate, {"sgdet": BasicSceneGraphEvaluator("sgdet")})
+        for index, predicate in enumerate(dataset.predicates)
+        if index > 0
+    ]
+
     # Interate data and predict.
-    for batch in tqdm.tqdm(data_loader):
+    for batch_index, batch in tqdm.tqdm(enumerate(data_loader)):
         # This is very much abuse of the indexing operation, but in the
         # implementation of KERN (see kern_model.py) it is mentioned as a "hack
         # to do multi-GPU training". Nevertheless, this produces the output
         # that we are interested in.
         output = model[batch]
+
+        if conf.num_gpus == 1:
+            output = [output]
+
+        for result_index, (
+            boxes,
+            objects,
+            object_scores,
+            predicates,
+            predicate_scores,
+        ) in enumerate(output):
+            print(boxes, objects, object_scores, predicates, predicate_scores)
+            break
+
+        break
 
 
 if __name__ == "__main__":
