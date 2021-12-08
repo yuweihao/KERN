@@ -57,37 +57,31 @@ def main(path):
         if index > 0
     ]
 
-    predictions = []
+    predictions = [
+        process_batch(model, batch, conf) for batch in tqdm.tqdm(data_loader)
+    ]
 
-    # Interate data and predict.
-    for batch_index, batch in tqdm.tqdm(enumerate(data_loader)):
-        # This is very much abuse of the indexing operation, but in the
-        # implementation of KERN (see kern_model.py) it is mentioned as a "hack
-        # to do multi-GPU training". Nevertheless, this produces the output
-        # that we are interested in.
-        output = model[batch]
 
-        if conf.num_gpus == 1:
-            output = [output]
+def process_batch(model, batch, conf):
+    # This is very much abuse of the indexing operation, but in the
+    # implementation of KERN (see kern_model.py) it is mentioned as a "hack to
+    # do multi-GPU training". Nevertheless, this line produces the output that
+    # we are interested in.
+    output = model[batch]
 
-        for result_index, (
-            boxes,
-            objects,
-            object_scores,
-            predicates,
-            predicate_scores,
-        ) in enumerate(output):
-            prediction = {
-                "pred_boxes": boxes * config.BOX_SCALE / config.IM_SCALE,
-                "pred_classes": objects,
-                "pred_rel_indx": predicates,
-                "obj_scores": object_scores,
-                "rel_scores": predicate_scores,
-            }
+    if conf.num_gpus == 1:
+        output = [output]
 
-            predictions.append(prediction)
-
-    print(predictions)
+    return [
+        {
+            "boxes": boxes * config.BOX_SCALE / config.IM_SCALE,
+            "objects": objects,
+            "predicates": predicates,
+            "object_scores": object_scores,
+            "predicate_scores": predicate_scores,
+        }
+        for boxes, objects, object_scores, predicates, predicate_scores in output
+    ]
 
 
 if __name__ == "__main__":
