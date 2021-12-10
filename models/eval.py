@@ -5,6 +5,7 @@ import dataloaders.movies
 import lib.evaluation.sg_eval
 import lib.kern_model
 import lib.pytorch_misc
+import matplotlib.pyplot as plt
 import torch
 import torch.utils.data
 import tqdm
@@ -61,6 +62,13 @@ def main(path):
         process_batch(model, batch, conf) for batch in tqdm.tqdm(data_loader)
     ]
 
+    return predictions
+
+
+def visualize(prediction):
+    file_name = predicates
+    ...
+
 
 def process_batch(model, batch, conf):
     # This is very much abuse of the indexing operation, but in the
@@ -68,6 +76,9 @@ def process_batch(model, batch, conf):
     # do multi-GPU training". Nevertheless, this line produces the output that
     # we are interested in.
     output = model[batch]
+
+    print(batch)
+    print(output)
 
     if conf.num_gpus == 1:
         output = [output]
