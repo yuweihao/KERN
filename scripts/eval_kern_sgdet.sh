@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-python models/eval_rels.py -m sgdet -p 100 -clip 5 \
+python models/eval.py -m sgdet -p 100  -clip 5 \
 -ckpt checkpoints/kern_sgdet.tar \
 -test \
 -b 1 \
