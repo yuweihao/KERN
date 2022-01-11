@@ -42,6 +42,7 @@ def main(path):
         rel_knowledge=conf.rel_knowledge,
     )
     model.cuda()
+    print(conf.ckpt)
     checkpoint = torch.load(conf.ckpt)
     lib.pytorch_misc.optimistic_restore(model, checkpoint["state_dict"])
     model.eval()
@@ -96,9 +97,11 @@ def process_batch(model, batch, conf):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--path", default="data/movies")
+#    parser = argparse.ArgumentParser()
+#    parser.add_argument("--path", default="data/movies")
 
-    args, _rest = parser.parse_known_args()
+#    args, _rest = parser.parse_known_args()
 
-    main(path=args.path)
+    main(path="/kern/data/custom_movies/")
+
+
