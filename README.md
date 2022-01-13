@@ -4,21 +4,29 @@
 
 This fork of the KERN repository has a few additions that (hopefully) make it easier to set up and run.
 
-## Setup
+## Install KERN for the first time
 The current KERN implementation relies on CUDA 9.0 which, unfortunately, is an older version that does not run on more recent operating systems.
 Regardless of your operating system's support for CUDA 9.0, begin with the following steps:
- * Clone the repository: `git clone git@github.com:AU-Nebula/KERN`.
- * Download the data: `bash download_data.sh`. There are quite some data to download, so this step will take a while.
- * Now, depending on wether CUDA 9.0 is available, follow the corresponding point below.
-   * CUDA 9.0 _is_ available. This assumes that Conda is installed on the system.
-     * Set up and appropiate Conda environment: `conda env create -f environment.yml`. This will create an environment called `kern` which includes all the dependencies needed to run the code.
-   * CUDA 9.0 is _not_ available. This assumes that Docker and [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker) are installed on the system.
-     * Build the Docker image: `docker build -t cuda9 .`.
-     * Boot up a container: `docker run -it -v local/path/to/repo:/kern --gpus all cuda9`.
- * Activate the Conda environment: `conda activate kern`.
- * Compile the CUDA part of the project: `bash compile.sh`.
- * Compute the statistical prior: `python prior_matrices/generate_knowledge.py`.
- * Now, either inside a Docker container or not, follow step 4, 5, and 6 from [the Setup section in the original README below](#setup-1).
+
+ * 1. Clone the repository: `git clone https://github.com/AU-Nebula/KERN.gitgit@github.com:AU-Nebula/KERN`.
+ * 2. Change directory: `cd KERN`.
+ * 3. Run: `sh kern_setup.sh`. There are quite some data to download, so this step will take a while. The script assumes that Docker and [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker) are installed on the system.
+ * 4. Activate the Conda environment: `conda activate kern`.
+ * 5. Compile the CUDA part of the project: `sh compile.sh`.
+ * 6. Generate knowledge matrices (statistical prior): `python prior_matrices/generate_knowledge.py`.
+ * 7. Test KERN processing by running Validation task with VG dataset: `python models/eval_rels.py -ckpt checkpoints/kern_sgdet.tar`.
+
+## Run KERN with custom images
+
+* 1. Run: `docker run -it -v $PWD:/kern --gpus all cuda9`.
+* 2. Upload custom dataset to `/data/custom_images`.
+* 3. Run: `sh scripts/eval_kern_sgdet.sh`.
+
+### Work in progress: 
+ * Create visualization script for Custom Dataset 
+
+
+ [the Setup section in the original README below](#setup-1).
 
 # Knowledge-Embedded Routing Network for Scene Graph Generation
 Tianshui Chen*, Weihao Yu*, Riquan Chen, and Liang Lin, “Knowledge-Embedded Routing Network for Scene Graph Generation”, CVPR, 2019. (* co-first authors) [[PDF](http://whyu.me/pdf/CVPR2019_KERN.pdf)]
