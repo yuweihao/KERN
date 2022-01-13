@@ -26,7 +26,7 @@ Regardless of your operating system's support for CUDA 9.0, begin with the follo
  * Create visualization script for Custom Dataset 
 
 
- [the Setup section in the original README below](#setup-1).
+ [the Setup section in the original README below](#setup).
 
 # Knowledge-Embedded Routing Network for Scene Graph Generation
 Tianshui Chen*, Weihao Yu*, Riquan Chen, and Liang Lin, “Knowledge-Embedded Routing Network for Scene Graph Generation”, CVPR, 2019. (* co-first authors) [[PDF](http://whyu.me/pdf/CVPR2019_KERN.pdf)]
