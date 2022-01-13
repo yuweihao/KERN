@@ -102,6 +102,6 @@ if __name__ == "__main__":
 
 #    args, _rest = parser.parse_known_args()
 
-    main(path="/kern/data/custom_movies/")
+    main(path="/kern/data/custom_images/")
 
 
