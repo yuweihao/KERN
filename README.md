@@ -8,7 +8,7 @@ This fork of the KERN repository has a few additions that (hopefully) make it ea
 The current KERN implementation relies on CUDA 9.0 which, unfortunately, is an older version that does not run on more recent operating systems.
 Regardless of your operating system's support for CUDA 9.0, begin with the following steps:
 
- 1. Clone the repository: `git clone https://github.com/AU-Nebula/KERN.gitgit@github.com:AU-Nebula/KERN`.
+ 1. Clone the repository: `git clone https://github.com/AU-Nebula/KERN.git`.
  2. Change directory: `cd KERN`.
  3. Run: `sh kern_setup.sh`. There are quite some data to download, so this step will take a while. The script assumes that Docker and [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker) are installed on the system.
  4. Activate the Conda environment: `conda activate kern`.
