@@ -1,4 +1,34 @@
-# Knowledge-Embedded Routing Network  for Scene Graph Generation
+# KERN
+
+[NB: Original README can be found below](#knowledge-embedded-routing-network-for-scene-graph-generation)
+
+This fork of the KERN repository has a few additions that (hopefully) make it easier to set up and run.
+
+## Install KERN for the first time
+The current KERN implementation relies on CUDA 9.0 which, unfortunately, is an older version that does not run on more recent operating systems.
+Regardless of your operating system's support for CUDA 9.0, begin with the following steps:
+
+ 1. Clone the repository: `git clone https://github.com/AU-Nebula/KERN.git`.
+ 2. Change directory: `cd KERN`.
+ 3. Run: `sh kern_setup.sh`. There are quite some data to download, so this step will take a while. The script assumes that Docker and [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker) are installed on the system.
+ 4. Activate the Conda environment: `conda activate kern`.
+ 5. Compile the CUDA part of the project: `sh compile.sh`.
+ 6. Generate knowledge matrices (statistical prior): `python prior_matrices/generate_knowledge.py`.
+ 7. Test KERN processing by running Validation task with VG dataset: `python models/eval_rels.py -ckpt checkpoints/kern_sgdet.tar`.
+
+## Run KERN with custom images
+
+ 1. Run: `docker run -it -v $PWD:/kern --gpus all cuda9`.
+ 2. Upload custom dataset to `/data/custom_images`.
+ 3. Run: `sh scripts/eval_kern_sgdet.sh`.
+
+### Work in progress: 
+ * Create visualization script for Custom Dataset 
+
+
+ [the Setup section in the original README below](#setup).
+
+# Knowledge-Embedded Routing Network for Scene Graph Generation
 Tianshui Chen*, Weihao Yu*, Riquan Chen, and Liang Lin, “Knowledge-Embedded Routing Network for Scene Graph Generation”, CVPR, 2019. (* co-first authors) [[PDF](http://whyu.me/pdf/CVPR2019_KERN.pdf)]
 
 **Note** A typo in our final CVPR version paper: h_{iC}^o in eq. (6) should be corrected to f_{iC}^o.
