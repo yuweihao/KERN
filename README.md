@@ -2,13 +2,14 @@
 
 [NB: Original README can be found below](#knowledge-embedded-routing-network-for-scene-graph-generation)
 
-This fork of the KERN repository has a few additions that (hopefully) make it easier to set up and run.
+**News: I have merged the PR from @AU-Nebula that (hopefully) make it easier to set up and run.**
+
 
 ## Install KERN for the first time
 The current KERN implementation relies on CUDA 9.0 which, unfortunately, is an older version that does not run on more recent operating systems.
 Regardless of your operating system's support for CUDA 9.0, begin with the following steps:
 
- 1. Clone the repository: `git clone https://github.com/AU-Nebula/KERN.git`.
+ 1. Clone the repository: `git clone https://github.com/yuweihao/KERN.git`.
  2. Change directory: `cd KERN`.
  3. Run: `sh kern_setup.sh`. There are quite some data to download, so this step will take a while. The script assumes that Docker and [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker) are installed on the system.
  4. Activate the Conda environment: `conda activate kern`.
