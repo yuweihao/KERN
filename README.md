@@ -2,7 +2,7 @@
 
 [NB: Original README can be found below](#knowledge-embedded-routing-network-for-scene-graph-generation)
 
-**News: I have merged the [PR](https://github.com/AU-Nebula/KERN) from [@AU-Nebula](https://github.com/AU-Nebula) that (hopefully) make it easier to set up and run. Thank [@AU-Nebula](https://github.com/AU-Nebula)! **
+**News: I have merged the [PR](https://github.com/AU-Nebula/KERN) from [@AU-Nebula](https://github.com/AU-Nebula) that (hopefully) make it easier to set up and run. Thank [@AU-Nebula](https://github.com/AU-Nebula)!**
 
 
 ## Install KERN for the first time
